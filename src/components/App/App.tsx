@@ -58,9 +58,7 @@ const App: React.FC = () => {
 
   }
 
-  // показывает фильмы с сердечками
-  // работает через раз
-  // ахуенно
+  // получить фильмы с сердечками
   async function getRatedMovie () {
     let guestSessionId = localStorage.getItem("name");
     let res = await fetch(
