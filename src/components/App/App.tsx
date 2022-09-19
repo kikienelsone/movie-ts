@@ -113,7 +113,7 @@ const App: React.FC = () => {
       );
     } else return "June 21, 1985";
   };
-  const delay = debounce(search, 600);
+  // const delay = debounce(search, 600);
   const spinner = loading ? (
     <Spin tip="Loading...">
       <Alert
@@ -145,7 +145,7 @@ const App: React.FC = () => {
           >
             <TabPane tab="Search" key="1">
               <div className="app__input">
-                <Input delay={delay} />
+                <Input delay={debounce(search, 600)} />
               </div>
               {movieData}
               {spinner}
