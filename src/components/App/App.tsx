@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const [genres, setGenres] = useState([]);
   const [rate, setRate] = useState([]);
 
-  async function getMovies  (title: string, page: number) {
+  async function getMovies  (title: string, page: number):Promise<void> {
     await fetch(`${url}&query=${title}&page=${page}`)
       .then((res) => {
       if (res.ok) {
@@ -42,14 +42,14 @@ const App: React.FC = () => {
     createGuestSession();
   }, []);
 
-  async function getGenres () {
+  async function getGenres ():Promise<void> {
     let response = await fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=e157b66a2125cee8a15a44803b9e8963")
     let dataGenres = await response.json()
     setGenres(dataGenres.genres)
   }
 
   // нужно создать гостевую сессию чтоб получить токен
-  async function createGuestSession () {
+  async function createGuestSession ():Promise<void> {
     let response = await fetch(
       "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=e157b66a2125cee8a15a44803b9e8963"
     )
@@ -58,8 +58,9 @@ const App: React.FC = () => {
 
   }
 
-  // получить фильмы с сердечками
-  async function getRatedMovie () {
+  // показывает фильмы с сердечками
+  // работает через раз
+  async function getRatedMovie ():Promise<void> {
     let guestSessionId = localStorage.getItem("name");
     let res = await fetch(
       `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=e157b66a2125cee8a15a44803b9e8963&language=en-US&sort_by=created_at.asc`)
@@ -70,7 +71,7 @@ const App: React.FC = () => {
   }
 
  // поставить рейтинг фильму
-  async function rateMovie (movieId: number, value: number) {
+  async function rateMovie (movieId: number, value: number):Promise<void> {
     let guestSessionId = localStorage.getItem("name");
     let res = await fetch(
       `https://api.themoviedb.org/3/movie/${movieId}/rating?api_key=e157b66a2125cee8a15a44803b9e8963&guest_session_id=${guestSessionId}`,
@@ -87,14 +88,14 @@ const App: React.FC = () => {
      await res.json()
   }
 
-  async function pagination (page: number) {
+  async function pagination (page: number):Promise<void> {
     let res = await fetch(`${url}&query=return&page=${page}`)
     let movie = await res.json()
     setData(movie.results)
     setLoading(false)
   }
 
-  async function search (event: string)  {
+  async function search (event: string):Promise<void>  {
     console.log(event);
     if (event) {
       let res = await fetch(`${url}&query=${event}`)
