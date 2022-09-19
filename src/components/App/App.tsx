@@ -37,7 +37,7 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    getMovies("return", 1)
+    getMovies("return", 2)
     getGenres();
     createGuestSession();
   }, []);
@@ -45,18 +45,14 @@ const App: React.FC = () => {
   async function getGenres ():Promise<void> {
     let response = await fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=e157b66a2125cee8a15a44803b9e8963")
     let dataGenres = await response.json()
-    setGenres(dataGenres.genres)
-  }
+    setGenres(dataGenres.genres)}
 
   // нужно создать гостевую сессию чтоб получить токен
   async function createGuestSession ():Promise<void> {
     let response = await fetch(
-      "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=e157b66a2125cee8a15a44803b9e8963"
-    )
+      "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=e157b66a2125cee8a15a44803b9e8963")
     let session = await response.json()
-    localStorage.setItem("name", session.guest_session_id)
-
-  }
+    localStorage.setItem("name", session.guest_session_id)}
 
   // показывает фильмы с сердечками
   // работает через раз
@@ -67,8 +63,7 @@ const App: React.FC = () => {
       let ratedFilms = await res.json()
       setRate(ratedFilms.results)
       setLoading(false)
-      console.log(rate)
-  }
+      console.log(rate)}
 
  // поставить рейтинг фильму
   async function rateMovie (movieId: number, value: number):Promise<void> {
@@ -85,15 +80,13 @@ const App: React.FC = () => {
         }),
       }
     )
-     await res.json()
-  }
+     await res.json()}
 
   async function pagination (page: number):Promise<void> {
     let res = await fetch(`${url}&query=return&page=${page}`)
     let movie = await res.json()
     setData(movie.results)
-    setLoading(false)
-  }
+    setLoading(false)}
 
   async function search (event: string):Promise<void>  {
     console.log(event);
@@ -101,9 +94,7 @@ const App: React.FC = () => {
       let res = await fetch(`${url}&query=${event}`)
       let movie = await res.json()
       setData(movie.results);
-    } else await getMovies("return", 1);
-
-  }
+    } else await getMovies("return", 2)}
 
   const date = (day: string) => {
     if (day) {
@@ -120,7 +111,7 @@ const App: React.FC = () => {
       );
     } else return "June 21, 1985";
   };
-  const delay = debounce(search, 300);
+  const delay = debounce(search, 600);
   const spinner = loading ? (
     <Spin tip="Loading...">
       <Alert
