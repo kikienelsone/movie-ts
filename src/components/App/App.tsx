@@ -63,9 +63,7 @@ const App:React.FC = () => {
       );
   };
 
-  // показывает фильмы с сердечками
-  // работает через раз
-  // ахуенно
+  // получить фильмы с сердечками
   const getRatedMovie = () => {
     let guestSessionId = localStorage.getItem('name');
     fetch(
@@ -80,10 +78,7 @@ const App:React.FC = () => {
 
   };
 
-  //поставить сердечко фильму.
-  // куда вставить токен?
-  // или не токен?
-  // ебать просто
+  // оценить фильм
   const rateMovie = (movieId: number, value: number) => {
     let guestSessionId = localStorage.getItem('name');
     fetch(`https://api.themoviedb.org/3/movie/${movieId}/rating?api_key=e157b66a2125cee8a15a44803b9e8963&guest_session_id=${guestSessionId}`, {
