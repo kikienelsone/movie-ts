@@ -11,13 +11,12 @@
   height: 300px;
 }
 
-@media (max-width: 680px){
-  .movie-item__image{
+@media (max-width: 680px) {
+  .movie-item__image {
     height: 130px;
     margin-left: 20px;
     margin-top: 20px;
   }
-
 }
 
 .movie-item__content {
@@ -25,7 +24,6 @@
   margin-right: 30px;
   margin-top: 10px;
   /*margin-bottom: 40px;*/
-
 }
 
 .movie-item__circle {

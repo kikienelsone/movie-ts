@@ -5,17 +5,14 @@
   list-style: none;
   margin: 40px;
   padding: 0;
-
 }
 
 .movie-list__item {
   box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
 }
 
-
-
-@media (max-width: 680px){
-  .movie-list{
+@media (max-width: 680px) {
+  .movie-list {
     display: flex;
     flex-direction: column;
     list-style: none;

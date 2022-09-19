@@ -5,27 +5,23 @@ import { GenresConsumer } from "../Context/Context";
 
 // @ts-ignore
 import img from "../Movie/movieImg.png";
-import { DataProps } from '../Intefaces/DataProps'
-import { GenresProps } from '../Intefaces/GenresProps'
+import { DataProps } from "../Intefaces/DataProps";
+import { GenresProps } from "../Intefaces/GenresProps";
 
 const Movie = (props: {
-  item: DataProps
-  date: (
-    arg: string
-  ) => string
-  rateMovie: (arg1: number, arg2: number) => void
-
+  item: DataProps;
+  date: (arg: string) => string;
+  rateMovie: (arg1: number, arg2: number) => void;
 }) => {
-  const rate = props.item.rating ? props.item.rating : 0
+  const rate = props.item.rating ? props.item.rating : 0;
   const posterAllPath = `https://image.tmdb.org/t/p/original${props.item.poster_path}`;
-  const posterImg =
-    posterAllPath ? (
-      <img className="movie-item__image" src={posterAllPath} alt="img" />
-    ) : (
-      <img className="movie-item__image" src={img} alt="img" />
-    );
+  const posterImg = posterAllPath ? (
+    <img className="movie-item__image" src={posterAllPath} alt="img" />
+  ) : (
+    <img className="movie-item__image" src={img} alt="img" />
+  );
   const styles =
-    (props.item.vote_average) <= 3 ? (
+    props.item.vote_average <= 3 ? (
       <div
         style={{ border: "4px solid #E90000" }}
         className="movie-item__circle"
@@ -56,7 +52,7 @@ const Movie = (props: {
     );
 
   return (
-    <GenresConsumer >
+    <GenresConsumer>
       {(genres) => (
         <div className="movie-item">
           {posterImg}
@@ -67,11 +63,17 @@ const Movie = (props: {
             </p>
             {styles}
 
-            {genres.map((genre: GenresProps) => {
-              if (props.item.genre_ids.includes(genre.id)) {
-                return <span key={genre.id} className="movie-item__genre">{genre.name}</span>;
-              }
-            }).slice(2)}
+            {genres
+              .map((genre: GenresProps) => {
+                if (props.item.genre_ids.includes(genre.id)) {
+                  return (
+                    <span key={genre.id} className="movie-item__genre">
+                      {genre.name}
+                    </span>
+                  );
+                }
+              })
+              .slice(2)}
 
             <p className="movie-item__text">{props.item.overview}</p>
             <div className="movie-item__rate">
@@ -87,5 +89,5 @@ const Movie = (props: {
       )}
     </GenresConsumer>
   );
-}
-export default Movie
+};
+export default Movie;

@@ -3,7 +3,7 @@ import "./Input.css";
 interface InputProps {
   delay: (arg: string) => void;
 }
-const Input:React.FC<InputProps> = ({delay}) =>{
+const Input: React.FC<InputProps> = ({ delay }) => {
   const [inputValue, setInputValue] = useState("");
 
   return (
@@ -17,5 +17,5 @@ const Input:React.FC<InputProps> = ({delay}) =>{
       placeholder="Type to search..."
     />
   );
-}
-export default Input
+};
+export default Input;

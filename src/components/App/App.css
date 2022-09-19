@@ -2,20 +2,26 @@
   text-align: center;
 }
 
-.app{
+.app {
   width: 100%;
   margin: 0;
-
 }
 
-.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list, .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-list {
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list,
+.ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-list {
   position: relative;
   display: flex;
   transition: transform 0.3s;
   margin: auto !important;
 }
 
-body{
+/*.app__tabs{*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  padding-bottom: 30px;*/
+/*}*/
+
+body {
   width: 100%;
 }
-
