@@ -80,13 +80,15 @@ const App: React.FC = () => {
         }),
       }
     )
-     await res.json()}
+     await res.json()
+  }
 
   async function pagination (page: number):Promise<void> {
     let res = await fetch(`${url}&query=return&page=${page}`)
     let movie = await res.json()
     setData(movie.results)
-    setLoading(false)}
+    setLoading(false)
+  }
 
   async function search (event: string):Promise<void>  {
     console.log(event);

@@ -11,8 +11,9 @@ const Input: React.FC<InputProps> = ({ delay }) => {
       className="input"
       value={inputValue}
       onChange={(e) => {
+        console.log(e.target.value)
         setInputValue(e.target.value);
-        delay(inputValue);
+        delay(e.target.value);
       }}
       placeholder="Type to search..."
     />
