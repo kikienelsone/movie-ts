@@ -8,7 +8,7 @@ import img from "../Movie/movieImg.png";
 import { MovieDataProps } from "../Intefaces/MovieDataProps";
 import { GenresProps } from "../Intefaces/GenresProps";
 import { rateMovie } from '../../services/Requests'
-import { styles } from '../../services/Styles'
+import { voteAverageStyles } from '../../services/VoteAverageStyles'
 
 interface MovieProps {
   item: MovieDataProps;
@@ -34,7 +34,7 @@ const Movie:React.FC<MovieProps> = ({ item,date }) => {
             <p className="movie-item__date">
               {date(item.release_date)}
             </p>
-            <div className={`movie-item__circle ${styles(item.vote_average)}`}>
+            <div className={`movie-item__circle ${voteAverageStyles(item.vote_average)}`}>
               {item.vote_average}
             </div>
             {genres
