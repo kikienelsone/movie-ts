@@ -10,6 +10,7 @@ import Input from "../Input/Input";
 import MovieList from "../MovieList/MovieList";
 import { GenresProvider } from "../Context/Context";
 import Movie from "../Movie/Movie";
+import { createGuestSession, getGenres, getMovies, getRatedMovie } from '../../services/Requests'
 
 const App: React.FC = () => {
   const url: string =
@@ -21,67 +22,11 @@ const App: React.FC = () => {
   const [genres, setGenres] = useState([]);
   const [rate, setRate] = useState([]);
 
-  async function getMovies  (title: string, page: number):Promise<void> {
-    await fetch(`${url}&query=${title}&page=${page}`)
-      .then((res) => {
-      if (res.ok) {
-        res.json().then((movie) => {
-          setData(movie.results);
-          setLoading(false);
-        });
-      } else {
-        setLoading(false);
-        setError(true);
-      }
-    });
-  }
-
   useEffect(() => {
-    getMovies("return", 2)
-    getGenres();
+    getMovies(setData, setLoading, setError, "return", 2)
+    getGenres(setGenres);
     createGuestSession();
   }, []);
-
-  async function getGenres ():Promise<void> {
-    let response = await fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=e157b66a2125cee8a15a44803b9e8963")
-    let dataGenres = await response.json()
-    setGenres(dataGenres.genres)}
-
-  // нужно создать гостевую сессию чтоб получить токен
-  async function createGuestSession ():Promise<void> {
-    let response = await fetch(
-      "https://api.themoviedb.org/3/authentication/guest_session/new?api_key=e157b66a2125cee8a15a44803b9e8963")
-    let session = await response.json()
-    localStorage.setItem("name", session.guest_session_id)}
-
-  // показывает фильмы с сердечками
-  // работает через раз
-  async function getRatedMovie ():Promise<void> {
-    let guestSessionId = localStorage.getItem("name");
-    let res = await fetch(
-      `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=e157b66a2125cee8a15a44803b9e8963&language=en-US&sort_by=created_at.asc`)
-      let ratedFilms = await res.json()
-      setRate(ratedFilms.results)
-      setLoading(false)
-      console.log(rate)}
-
- // поставить рейтинг фильму
-  async function rateMovie (movieId: number, value: number):Promise<void> {
-    let guestSessionId = localStorage.getItem("name");
-    let res = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}/rating?api_key=e157b66a2125cee8a15a44803b9e8963&guest_session_id=${guestSessionId}`,
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          value: value,
-        }),
-      }
-    )
-     await res.json()
-  }
 
   async function pagination (page: number):Promise<void> {
     let res = await fetch(`${url}&query=return&page=${page}`)
@@ -90,13 +35,15 @@ const App: React.FC = () => {
     setLoading(false)
   }
 
-  async function search (event: string):Promise<void>  {
+  async function search (event: string, page: number | null):Promise<void>  {
     console.log(event);
-    if (event) {
-      let res = await fetch(`${url}&query=${event}`)
+    if (event !== "") {
+      let res = await fetch(`${url}&query=${event}&page=${page}`)
       let movie = await res.json()
       setData(movie.results);
-    } else await getMovies("return", 2)}
+    }
+  }
+
 
   const date = (day: string) => {
     if (day) {
@@ -113,7 +60,6 @@ const App: React.FC = () => {
       );
     } else return "June 21, 1985";
   };
-  // const delay = debounce(search, 600);
   const spinner = loading ? (
     <Spin tip="Loading...">
       <Alert
@@ -124,11 +70,18 @@ const App: React.FC = () => {
     </Spin>
   ) : null;
   const { TabPane } = Tabs;
+
   const movieData = !loading ? (
-    <MovieList rateMovie={rateMovie} data={data} date={date} />
+    <MovieList data={data} date={date} />
   ) : null;
+
+  const paginate = data.length ? <Pagination
+    onChange={pagination}
+    defaultCurrent={1}
+    total={50}
+  /> : null
   if (error) {
-    return <Alert message="OMG" type="info" closeText="Close It Now!" />;
+    return <Alert message="OMG" type="info" closeText="Close It Now!"  onClose={()=> getMovies(setData, setLoading, setError, "return", 2)}/>;
   }
 
   return (
@@ -138,7 +91,7 @@ const App: React.FC = () => {
           <Tabs
             onChange={(event) => {
               if (event === "2") {
-                getRatedMovie();
+                getRatedMovie(setRate, setLoading);
               }
             }}
             defaultActiveKey="1"
@@ -149,13 +102,7 @@ const App: React.FC = () => {
               </div>
               {movieData}
               {spinner}
-              <div className="app__pagination">
-                <Pagination
-                  onChange={pagination}
-                  defaultCurrent={1}
-                  total={50}
-                />
-              </div>
+              <div className="app__pagination">{paginate}</div>
             </TabPane>
             <TabPane tab="Rate" key="2">
               {spinner}
@@ -164,7 +111,7 @@ const App: React.FC = () => {
                   {rate.map((item) => {
                     return (
                       <li className="movie-list__item">
-                        <Movie item={item} date={date} rateMovie={rateMovie} />
+                        <Movie item={item} date={date}/>
                       </li>
                     );
                   })}

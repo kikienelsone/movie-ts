@@ -1,6 +1,6 @@
 import { GenresProps } from "./GenresProps";
 
-export interface DataProps {
+export interface MovieDataProps {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];

@@ -1,15 +1,14 @@
 import React from "react";
 import Movie from "../Movie/Movie";
 import "./MovieList.css";
-import { DataProps } from "../Intefaces/DataProps";
+import { MovieDataProps } from "../Intefaces/MovieDataProps";
 
 interface MovieListProps {
-  data: DataProps[];
+  data: MovieDataProps[];
   date: (arg: string) => string;
-  rateMovie: (arg1: number, arg2: number) => void;
 }
 
-const MovieList: React.FC<MovieListProps> = ({ data, date, rateMovie }) => {
+const MovieList: React.FC<MovieListProps> = ({ data, date }) => {
   return (
     <div>
       <ul className="movie-list">
@@ -17,7 +16,7 @@ const MovieList: React.FC<MovieListProps> = ({ data, date, rateMovie }) => {
           .map((item) => {
             return (
               <li className="movie-list__item" key={item.id}>
-                <Movie item={item} date={date} rateMovie={rateMovie} />
+                <Movie item={item} date={date}/>
               </li>
             );
           })
