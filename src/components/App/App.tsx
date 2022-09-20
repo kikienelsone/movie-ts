@@ -72,8 +72,8 @@ const App: React.FC = () => {
   const movieData = !loading ? (
     <MovieList data={data} date={date} />
   ) : null;
-
-  const paginate = data.length ? <Pagination
+console.log(data)
+  const paginate = data.length > 0 ? <Pagination
     onChange={pagination}
     defaultCurrent={1}
     total={50}

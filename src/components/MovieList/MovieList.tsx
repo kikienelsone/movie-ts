@@ -20,7 +20,7 @@ const MovieList: React.FC<MovieListProps> = ({ data, date }) => {
               </li>
             );
           })
-          .slice(14)}
+          }
       </ul>
     </div>
   );
