@@ -36,14 +36,12 @@ const App: React.FC = () => {
   }
 
   async function search (event: string, page: number | null):Promise<void>  {
-    console.log(event);
     if (event !== "") {
       let res = await fetch(`${url}&query=${event}&page=${page}`)
       let movie = await res.json()
       setData(movie.results);
     }
   }
-
 
   const date = (day: string) => {
     if (day) {

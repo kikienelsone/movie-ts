@@ -1,8 +1,9 @@
+import { Dispatch } from 'react'
 
-export async function getGenres (param: any):Promise<void> {
+export async function getGenres (genres: any):Promise<void> {
   let response = await fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=e157b66a2125cee8a15a44803b9e8963")
   let dataGenres = await response.json()
-  param(dataGenres.genres)
+  genres(dataGenres.genres)
 }
 
 export async function createGuestSession ():Promise<void> {
@@ -12,7 +13,7 @@ export async function createGuestSession ():Promise<void> {
   localStorage.setItem("name", session.guest_session_id)
 }
 
-export async function getMovies  (data:any, loading:any, error:any, title: string, page: number | null):Promise<void> {
+export async function getMovies  (data:any, loading:Dispatch<boolean>, error:Dispatch<boolean>, title: string, page: number | null):Promise<void> {
   await fetch(`https://api.themoviedb.org/3/search/movie?api_key=e157b66a2125cee8a15a44803b9e8963&query=${title}&page=${page}`)
     .then((res) => {
       if (res.ok) {
@@ -44,7 +45,7 @@ export async function rateMovie (movieId: number, value: number):Promise<void> {
   await res.json()
 }
 
-export async function getRatedMovie (rate:any, loading:any):Promise<void> {
+export async function getRatedMovie (rate:any, loading:Dispatch<boolean>):Promise<void> {
   let guestSessionId = localStorage.getItem("name");
   let res = await fetch(
     `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=e157b66a2125cee8a15a44803b9e8963&language=en-US&sort_by=created_at.asc`)
@@ -53,3 +54,4 @@ export async function getRatedMovie (rate:any, loading:any):Promise<void> {
   loading(false)
   console.log(rate)
 }
+
