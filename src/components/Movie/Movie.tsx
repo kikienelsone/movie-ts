@@ -8,6 +8,7 @@ import img from "../Movie/movieImg.png";
 import { MovieDataProps } from "../Intefaces/MovieDataProps";
 import { GenresProps } from "../Intefaces/GenresProps";
 import { rateMovie } from '../../services/Requests'
+import { styles } from '../../services/Styles'
 
 interface MovieProps {
   item: MovieDataProps;
@@ -22,38 +23,8 @@ const Movie:React.FC<MovieProps> = ({ item,date }) => {
   ) : (
     <img className="movie-item__image" src={img} alt="img" />
   );
-  const styles =
-    item.vote_average <= 3 ? (
-      <div
-        style={{ border: "4px solid #E90000" }}
-        className="movie-item__circle"
-      >
-        {item.vote_average}
-      </div>
-    ) : item.vote_average > 3 && item.vote_average < 5 ? (
-      <div
-        style={{ border: "4px solid #E97E00" }}
-        className="movie-item__circle"
-      >
-        {item.vote_average}
-      </div>
-    ) : item.vote_average > 5 && item.vote_average < 7 ? (
-      <div
-        style={{ border: "4px solid #E9D100" }}
-        className="movie-item__circle"
-      >
-        {item.vote_average}
-      </div>
-    ) : (
-      <div
-        style={{ border: "4px solid #66E900" }}
-        className="movie-item__circle"
-      >
-        {item.vote_average}
-      </div>
-    );
 
-  return (
+    return (
     <GenresConsumer>
       {(genres) => (
         <div className="movie-item">
@@ -63,8 +34,9 @@ const Movie:React.FC<MovieProps> = ({ item,date }) => {
             <p className="movie-item__date">
               {date(item.release_date)}
             </p>
-            {styles}
-
+            <div className={`movie-item__circle ${styles(item.vote_average)}`}>
+              {item.vote_average}
+            </div>
             {genres
               .map((genre: GenresProps) => {
                 if (item.genre_ids.includes(genre.id)) {

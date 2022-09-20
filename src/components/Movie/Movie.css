@@ -36,7 +36,26 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  /*border: 4px solid #E9D100;*/
+  border: 4px solid #E9D100;
+}
+
+.circle__red{
+  border: 4px solid #E90000;
+}
+
+.circle__orange{
+  border: 4px solid #E97E00;
+
+}
+
+.circle__yellow{
+  border: 4px solid #E9D100;
+
+}
+
+.movie-item__circle.circle__green{
+  border: 4px solid #66E900;
+
 }
 
 .movie-item__text {
