@@ -28,11 +28,13 @@ const App: React.FC = () => {
     createGuestSession();
   }, []);
 
-  async function pagination (page: number):Promise<void> {
-    let res = await fetch(`${url}&query=return&page=${page}`)
-    let movie = await res.json()
-    setData(movie.results)
-    setLoading(false)
+  function pagination (page: number) {
+    // let res = await fetch(`${url}&query=return&page=${page}`)
+    // let movie = await res.json()
+    // setData(movie.results)
+    // setLoading(false)
+    getMovies(setData, setLoading, setError, 'return',  page)
+
   }
 
    function search (event: string, page: number | null)  {
@@ -40,7 +42,7 @@ const App: React.FC = () => {
       // let res = await fetch(`${url}&query=${event}&page=${page}`)
       // let movie = await res.json()
       // setData(movie.results);
-      getMovies(setData, setLoading, setError, event, 2)
+      getMovies(setData, setLoading, setError, event, page)
 
     }
   }
