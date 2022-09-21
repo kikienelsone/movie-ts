@@ -35,11 +35,13 @@ const App: React.FC = () => {
     setLoading(false)
   }
 
-  async function search (event: string, page: number | null):Promise<void>  {
+   function search (event: string, page: number | null)  {
     if (event !== "") {
-      let res = await fetch(`${url}&query=${event}&page=${page}`)
-      let movie = await res.json()
-      setData(movie.results);
+      // let res = await fetch(`${url}&query=${event}&page=${page}`)
+      // let movie = await res.json()
+      // setData(movie.results);
+      getMovies(setData, setLoading, setError, event, 2)
+
     }
   }
 

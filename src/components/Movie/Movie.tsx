@@ -24,6 +24,7 @@ const Movie:React.FC<MovieProps> = ({ item,date }) => {
     <img className="movie-item__image" src={img} alt="img" />
   );
 
+
     return (
     <GenresConsumer>
       {(genres) => (
