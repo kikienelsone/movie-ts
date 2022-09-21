@@ -13,8 +13,8 @@ import Movie from "../Movie/Movie";
 import { createGuestSession, getGenres, getMovies, getRatedMovie } from '../../services/Requests'
 
 const App: React.FC = () => {
-  const url: string =
-    "https://api.themoviedb.org/3/search/movie?api_key=e157b66a2125cee8a15a44803b9e8963";
+  // const url: string =
+  //   "https://api.themoviedb.org/3/search/movie?api_key=e157b66a2125cee8a15a44803b9e8963";
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,7 +33,7 @@ const App: React.FC = () => {
     // let movie = await res.json()
     // setData(movie.results)
     // setLoading(false)
-    getMovies(setData, setLoading, setError, 'return',  page)
+    getMovies(setData, setLoading, setError, "return", page)
 
   }
 
